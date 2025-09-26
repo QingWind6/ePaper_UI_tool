@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFT_eSPI & U8g2 可视化UI编辑器 v2.5 (可编辑)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="toolbar">
+            <h3>工具箱</h3>
+            <div class="tools-grid">
+                <button id="tool-select" class="tool-btn active" title="选择/移动 (V)">
+                    <svg viewBox="0 0 24 24"><path d="M13.6,2.6l-3.09,8.24l-4.51-1.5L2.2,21.8l19.6-19.6L13.6,2.6z M11.23,12.23l2.36-6.31l3.22,3.22L11.23,12.23z"></path></svg>
+                    <span>选择</span>
+                </button>
+                <button id="tool-pixel" class="tool-btn" title="画点 (P)">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle></svg>
+                    <span>点</span>
+                </button>
+                <button id="tool-line" class="tool-btn" title="画线 (L)">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" transform="rotate(135 12 12)"></path></svg>
+                    <span>线</span>
+                </button>
+                <button id="tool-rect" class="tool-btn" title="矩形(空心)">
+                   <svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm16 16H5V5h14v14z"></path></svg>
+                    <span>矩形</span>
+                </button>
+                <button id="tool-fill-rect" class="tool-btn" title="矩形(实心)">
+                    <svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3z"></path></svg>
+                    <span>填充矩形</span>
+                </button>
+                <button id="tool-circle" class="tool-btn" title="圆形(空心)">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
+                    <span>圆</span>
+                </button>
+                <button id="tool-fill-circle" class="tool-btn" title="圆形(实心)">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"></path></svg>
+                    <span>填充圆</span>
+                </button>
+                <button id="tool-text" class="tool-btn" title="文字 (T)">
+                    <svg viewBox="0 0 24 24"><path d="M5 4v3h5.5v12h3V7H19V4z"></path></svg>
+                    <span>文字</span>
+                </button>
+                <button id="tool-bitmap" class="tool-btn" title="位图 (B)">
+                    <svg viewBox="0 0 24 24"><path d="M21.5,4H18l2.5,3h-2L16,4h-2.5l2.5,3h-2L14,4h-2.5l2.5,3h-2L12,4H9.5l2.5,3h-2L10,4H7.5l2.5,3h-2L8,4H5.5L8,7H5l-2.5-3H6L3.5,7H7L4.5,10H8l-2.5,3H9l-2.5,3H10l-2.5,3H11l-2.5,3H12l-2.5,3H13l-2.5,3H14l-2.5,3h2.5l-2.5-3H16l-2.5,3h2.5l-2.5-3H18l-2.5,3h2.5l-2.5-3h2.5v-2.5l-3,2.5v-2l3,2.5v-2.5l-3,2.5v-2l3,2.5V4.5L18,2.5V5l2.5-2.5V6L23,3.5V7l-2.5,2.5V8l2.5-2.5V9l-2.5,2.5V10l2.5-2.5v1.5L20,11.5v1l3-2.5V11l-3,2.5v-1l3-2.5V12l-3,2.5V13l3-2.5V14l-3,2.5V15l3-2.5v1.5L19.5,14v1l3.5-2.5V14l-3.5,2.5v-1l3.5-2.5V15L20,17.5V18l2.5-2.5V19H22V2.5h-0.5V4z M3.5,20H2.5v-2h1V20z M4.5,18H3.5v-2h1V18z M5.5,16H4.5v-2h1V16z M6.5,14H5.5v-2h1V14z M7.5,12H6.5v-2h1V12z M8.5,10H7.5V8h1V10z M9.5,8H8.5V6h1V8z"></path></svg>
+                    <span>位图</span>
+                </button>
+            </div>
+            <div class="settings">
+                <h3>设置</h3>
+                <div class="prop-item">
+                    <label for="canvas-width-input">画布宽度</label>
+                    <input type="number" id="canvas-width-input" class="size-input" value="320">
+                </div>
+                 <div class="prop-item">
+                    <label for="canvas-height-input">画布高度</label>
+                    <input type="number" id="canvas-height-input" class="size-input" value="240">
+                </div>
+                <button id="btn-apply-size">应用尺寸</button>
+                <hr>
+                <div class="prop-item">
+                    <label for="tool-color-picker">工具颜色</label>
+                    <input type="color" id="tool-color-picker" class="color-picker-input" value="#000000">
+                </div>
+                <div class="prop-item">
+                    <label for="canvas-bg-color">背景色</label>
+                    <input type="color" id="canvas-bg-color" class="color-picker-input" value="#FFFFFF">
+                </div>
+            </div>
+             <button id="btn-delete-action" title="删除选中的历史记录">删除选中项</button>
+            <button id="btn-clear" title="清空画布">清空</button>
+        </div>
+
+        <div class="main-content">
+            <div id="canvas-container">
+                <canvas id="ui-canvas"></canvas>
+            </div>
+            <div id="timeline-container">
+                <div id="timeline-track"></div>
+                <div id="timeline-cursor" style="left: -5px;"></div>
+            </div>
+        </div>
+
+        <div class="code-output">
+            <h3>生成的代码</h3>
+            <button id="copy-code-btn">一键复制</button>
+            <textarea id="generated-code" readonly></textarea>
+        </div>
+    </div>
+
+    <div id="bitmap-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3>导入位图</h3>
+            <div class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bitmap-width">宽度 (Width)</label>
+                        <input type="number" id="bitmap-width" value="231">
+                    </div>
+                    <div class="form-group">
+                        <label for="bitmap-height">高度 (Height)</label>
+                        <input type="number" id="bitmap-height" value="50">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bitmap-bpp">BPP (Bits Per Pixel)</label>
+                        <select id="bitmap-bpp">
+                            <option value="1">1 bpp (黑白)</option>
+                            <option value="16" selected>16 bpp (RGB565)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bitmap-c-array">C 语言数组</label>
+                    <textarea id="bitmap-c-array" rows="8" placeholder="在此处粘贴完整的C数组定义..."></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="modal-btn-cancel">取消</button>
+                <button id="modal-btn-confirm">确认导入</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
